@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kuafu.web.mapper.CareModeSettingAllMapper">
+    <sql id="care_mode_setting_list_sql">
+        select
+        ui.password   ,
+        cms.user_info_user_info_id_1   ,
+        cms.care_mode_setting_id   ,
+        ui.role_enum_role_enum_id_1   ,
+        ui.phone_number   ,
+        cms.enabled   ,
+        ui.username   
+
+
+        FROM care_mode_setting cms
+        left join user_info ui on cms.user_info_user_info_id_1 = ui.user_info_id
+
+        </sql>
+
+        <resultMap id="selectListNewMap" type="com.kuafu.web.entity.CareModeSettingAll">
+
+        <result property="password" column="password"/>
+
+        <result property="userInfoUserInfoId1" column="user_info_user_info_id_1"/>
+
+        <result property="careModeSettingId" column="care_mode_setting_id"/>
+
+        <result property="roleEnumRoleEnumId1" column="role_enum_role_enum_id_1"/>
+
+        <result property="phoneNumber" column="phone_number"/>
+
+        <result property="enabled" column="enabled"/>
+
+        <result property="username" column="username"/>
+
+
+
+
+        </resultMap>
+
+<select id="selectListNew"  resultMap="selectListNewMap">
+select
+ui.password   ,
+cms.user_info_user_info_id_1   ,
+cms.care_mode_setting_id   ,
+ui.role_enum_role_enum_id_1   ,
+ui.phone_number   ,
+cms.enabled   ,
+ui.username   
+
+
+
+        FROM care_mode_setting cms
+        left join
+
+        user_info
+
+        ui on cms.user_info_user_info_id_1 = ui.user_info_id
+
+
+
+${ew.customSqlSegment}
+        </select>
+
+<select id="selectList" resultType="com.kuafu.web.entity.CareModeSettingAll">
+select
+ui.password   ,
+cms.user_info_user_info_id_1   ,
+cms.care_mode_setting_id   ,
+ui.role_enum_role_enum_id_1   ,
+ui.phone_number   ,
+cms.enabled   ,
+ui.username   
+
+
+        FROM care_mode_setting cms
+        left join user_info ui on cms.user_info_user_info_id_1 = ui.user_info_id
+
+
+${ew.customSqlSegment}
+        </select>
+
+<select id="selectPage" resultType="com.kuafu.web.entity.CareModeSettingAll">
+select
+ui.password  ,
+cms.user_info_user_info_id_1  ,
+cms.care_mode_setting_id  ,
+ui.role_enum_role_enum_id_1  ,
+ui.phone_number  ,
+cms.enabled  ,
+ui.username  
+
+
+
+        FROM care_mode_setting cms
+        left join user_info ui on cms.user_info_user_info_id_1 = ui.user_info_id
+
+
+
+
+
+${ew.customSqlSegment}
+        </select>
+
+<select id="selectById" resultType="com.kuafu.web.entity.CareModeSettingAll">
+select
+ui.password  ,
+cms.user_info_user_info_id_1  ,
+cms.care_mode_setting_id  ,
+ui.role_enum_role_enum_id_1  ,
+ui.phone_number  ,
+cms.enabled  ,
+ui.username  
+
+
+        FROM care_mode_setting cms
+        left join user_info ui on cms.user_info_user_info_id_1 = ui.user_info_id
+
+
+
+        where cms.care_mode_setting_id = #{id}
+        </select>
+
+<select id="selectCount" resultType="java.lang.Long">
+select
+count(*)
+
+
+
+FROM care_mode_setting cms
+left join user_info ui on cms.user_info_user_info_id_1 = ui.user_info_id
+
+
+
+${ew.customSqlSegment}
+
+
+        </select>
+
+        </mapper>

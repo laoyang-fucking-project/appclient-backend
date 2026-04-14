@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kuafu.web.mapper.AiChatRecordAllMapper">
+    <sql id="ai_chat_record_list_sql">
+        select
+        acr.question_text   ,
+        acr.answer_text   ,
+        ui.password   ,
+        acr.user_info_user_info_id_1   ,
+        acr.create_time   ,
+        ui.role_enum_role_enum_id_1   ,
+        acr.audio_url   ,
+        ui.phone_number   ,
+        acr.ai_chat_record_id   ,
+        ui.username   
+
+
+        FROM ai_chat_record acr
+        left join user_info ui on acr.user_info_user_info_id_1 = ui.user_info_id
+
+        </sql>
+
+        <resultMap id="selectListNewMap" type="com.kuafu.web.entity.AiChatRecordAll">
+
+        <result property="questionText" column="question_text"/>
+
+        <result property="answerText" column="answer_text"/>
+
+        <result property="password" column="password"/>
+
+        <result property="userInfoUserInfoId1" column="user_info_user_info_id_1"/>
+
+        <result property="createTime" column="create_time"/>
+
+        <result property="roleEnumRoleEnumId1" column="role_enum_role_enum_id_1"/>
+
+        <result property="audioUrl" column="audio_url"/>
+
+        <result property="phoneNumber" column="phone_number"/>
+
+        <result property="aiChatRecordId" column="ai_chat_record_id"/>
+
+        <result property="username" column="username"/>
+
+
+
+
+        </resultMap>
+
+<select id="selectListNew"  resultMap="selectListNewMap">
+select
+acr.question_text   ,
+acr.answer_text   ,
+ui.password   ,
+acr.user_info_user_info_id_1   ,
+acr.create_time   ,
+ui.role_enum_role_enum_id_1   ,
+acr.audio_url   ,
+ui.phone_number   ,
+acr.ai_chat_record_id   ,
+ui.username   
+
+
+
+        FROM ai_chat_record acr
+        left join
+
+        user_info
+
+        ui on acr.user_info_user_info_id_1 = ui.user_info_id
+
+
+
+${ew.customSqlSegment}
+        </select>
+
+<select id="selectList" resultType="com.kuafu.web.entity.AiChatRecordAll">
+select
+acr.question_text   ,
+acr.answer_text   ,
+ui.password   ,
+acr.user_info_user_info_id_1   ,
+acr.create_time   ,
+ui.role_enum_role_enum_id_1   ,
+acr.audio_url   ,
+ui.phone_number   ,
+acr.ai_chat_record_id   ,
+ui.username   
+
+
+        FROM ai_chat_record acr
+        left join user_info ui on acr.user_info_user_info_id_1 = ui.user_info_id
+
+
+${ew.customSqlSegment}
+        </select>
+
+<select id="selectPage" resultType="com.kuafu.web.entity.AiChatRecordAll">
+select
+acr.question_text  ,
+acr.answer_text  ,
+ui.password  ,
+acr.user_info_user_info_id_1  ,
+acr.create_time  ,
+ui.role_enum_role_enum_id_1  ,
+acr.audio_url  ,
+ui.phone_number  ,
+acr.ai_chat_record_id  ,
+ui.username  
+
+
+
+        FROM ai_chat_record acr
+        left join user_info ui on acr.user_info_user_info_id_1 = ui.user_info_id
+
+
+
+
+
+${ew.customSqlSegment}
+        </select>
+
+<select id="selectById" resultType="com.kuafu.web.entity.AiChatRecordAll">
+select
+acr.question_text  ,
+acr.answer_text  ,
+ui.password  ,
+acr.user_info_user_info_id_1  ,
+acr.create_time  ,
+ui.role_enum_role_enum_id_1  ,
+acr.audio_url  ,
+ui.phone_number  ,
+acr.ai_chat_record_id  ,
+ui.username  
+
+
+        FROM ai_chat_record acr
+        left join user_info ui on acr.user_info_user_info_id_1 = ui.user_info_id
+
+
+
+        where acr.ai_chat_record_id = #{id}
+        </select>
+
+<select id="selectCount" resultType="java.lang.Long">
+select
+count(*)
+
+
+
+FROM ai_chat_record acr
+left join user_info ui on acr.user_info_user_info_id_1 = ui.user_info_id
+
+
+
+${ew.customSqlSegment}
+
+
+        </select>
+
+        </mapper>

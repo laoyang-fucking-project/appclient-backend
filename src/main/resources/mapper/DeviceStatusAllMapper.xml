@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kuafu.web.mapper.DeviceStatusAllMapper">
+    <sql id="device_status_list_sql">
+        select
+        ds.last_update_time   ,
+        ds.device_status_id   ,
+        ds.device_name   ,
+        dte.type_name   ,
+        dse.status_name   ,
+        ds.device_type_enum_device_type_enum_id_1   ,
+        ds.device_status_enum_device_status_enum_id_1   
+
+
+        FROM device_status ds
+        left join device_type_enum dte on ds.device_type_enum_device_type_enum_id_1 = dte.device_type_enum_id
+        left join device_status_enum dse on ds.device_status_enum_device_status_enum_id_1 = dse.device_status_enum_id
+
+        </sql>
+
+        <resultMap id="selectListNewMap" type="com.kuafu.web.entity.DeviceStatusAll">
+
+        <result property="lastUpdateTime" column="last_update_time"/>
+
+        <result property="deviceStatusId" column="device_status_id"/>
+
+        <result property="deviceName" column="device_name"/>
+
+        <result property="typeName" column="type_name"/>
+
+        <result property="statusName" column="status_name"/>
+
+        <result property="deviceTypeEnumDeviceTypeEnumId1" column="device_type_enum_device_type_enum_id_1"/>
+
+        <result property="deviceStatusEnumDeviceStatusEnumId1" column="device_status_enum_device_status_enum_id_1"/>
+
+
+
+
+        </resultMap>
+
+<select id="selectListNew"  resultMap="selectListNewMap">
+select
+ds.last_update_time   ,
+ds.device_status_id   ,
+ds.device_name   ,
+dte.type_name   ,
+dse.status_name   ,
+ds.device_type_enum_device_type_enum_id_1   ,
+ds.device_status_enum_device_status_enum_id_1   
+
+
+
+        FROM device_status ds
+        left join
+
+        device_type_enum
+
+        dte on ds.device_type_enum_device_type_enum_id_1 = dte.device_type_enum_id
+        left join
+
+        device_status_enum
+
+        dse on ds.device_status_enum_device_status_enum_id_1 = dse.device_status_enum_id
+
+
+
+${ew.customSqlSegment}
+        </select>
+
+<select id="selectList" resultType="com.kuafu.web.entity.DeviceStatusAll">
+select
+ds.last_update_time   ,
+ds.device_status_id   ,
+ds.device_name   ,
+dte.type_name   ,
+dse.status_name   ,
+ds.device_type_enum_device_type_enum_id_1   ,
+ds.device_status_enum_device_status_enum_id_1   
+
+
+        FROM device_status ds
+        left join device_type_enum dte on ds.device_type_enum_device_type_enum_id_1 = dte.device_type_enum_id
+        left join device_status_enum dse on ds.device_status_enum_device_status_enum_id_1 = dse.device_status_enum_id
+
+
+${ew.customSqlSegment}
+        </select>
+
+<select id="selectPage" resultType="com.kuafu.web.entity.DeviceStatusAll">
+select
+ds.last_update_time  ,
+ds.device_status_id  ,
+ds.device_name  ,
+dte.type_name  ,
+dse.status_name  ,
+ds.device_type_enum_device_type_enum_id_1  ,
+ds.device_status_enum_device_status_enum_id_1  
+
+
+
+        FROM device_status ds
+        left join device_type_enum dte on ds.device_type_enum_device_type_enum_id_1 = dte.device_type_enum_id
+        left join device_status_enum dse on ds.device_status_enum_device_status_enum_id_1 = dse.device_status_enum_id
+
+
+
+
+
+${ew.customSqlSegment}
+        </select>
+
+<select id="selectById" resultType="com.kuafu.web.entity.DeviceStatusAll">
+select
+ds.last_update_time  ,
+ds.device_status_id  ,
+ds.device_name  ,
+dte.type_name  ,
+dse.status_name  ,
+ds.device_type_enum_device_type_enum_id_1  ,
+ds.device_status_enum_device_status_enum_id_1  
+
+
+        FROM device_status ds
+        left join device_type_enum dte on ds.device_type_enum_device_type_enum_id_1 = dte.device_type_enum_id
+        left join device_status_enum dse on ds.device_status_enum_device_status_enum_id_1 = dse.device_status_enum_id
+
+
+
+        where ds.device_status_id = #{id}
+        </select>
+
+<select id="selectCount" resultType="java.lang.Long">
+select
+count(*)
+
+
+
+FROM device_status ds
+left join device_type_enum dte on ds.device_type_enum_device_type_enum_id_1 = dte.device_type_enum_id
+left join device_status_enum dse on ds.device_status_enum_device_status_enum_id_1 = dse.device_status_enum_id
+
+
+
+${ew.customSqlSegment}
+
+
+        </select>
+
+        </mapper>

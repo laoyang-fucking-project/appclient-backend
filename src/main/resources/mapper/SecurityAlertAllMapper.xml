@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kuafu.web.mapper.SecurityAlertAllMapper">
+    <sql id="security_alert_list_sql">
+        select
+        sa.alert_status_enum_alert_status_enum_id_1   ,
+        ate.type_name   ,
+        sa.create_time   ,
+        ase.status_name   ,
+        sa.description   ,
+        ui.role_enum_role_enum_id_1   ,
+        sa.security_alert_id   ,
+        sa.report_user_info_user_info_id_1   ,
+        sa.alert_level_enum_alert_level_enum_id_1   ,
+        ui.password   ,
+        ale.level_name   ,
+        sa.alert_type_enum_alert_type_enum_id_1   ,
+        ui.phone_number   ,
+        sa.process_progress   ,
+        ui.username   
+
+
+        FROM security_alert sa
+        left join alert_type_enum ate on sa.alert_type_enum_alert_type_enum_id_1 = ate.alert_type_enum_id
+        left join alert_level_enum ale on sa.alert_level_enum_alert_level_enum_id_1 = ale.alert_level_enum_id
+        left join alert_status_enum ase on sa.alert_status_enum_alert_status_enum_id_1 = ase.alert_status_enum_id
+        left join user_info ui on sa.report_user_info_user_info_id_1 = ui.user_info_id
+
+        </sql>
+
+        <resultMap id="selectListNewMap" type="com.kuafu.web.entity.SecurityAlertAll">
+
+        <result property="alertStatusEnumAlertStatusEnumId1" column="alert_status_enum_alert_status_enum_id_1"/>
+
+        <result property="typeName" column="type_name"/>
+
+        <result property="createTime" column="create_time"/>
+
+        <result property="statusName" column="status_name"/>
+
+        <result property="description" column="description"/>
+
+        <result property="roleEnumRoleEnumId1" column="role_enum_role_enum_id_1"/>
+
+        <result property="securityAlertId" column="security_alert_id"/>
+
+        <result property="reportUserInfoUserInfoId1" column="report_user_info_user_info_id_1"/>
+
+        <result property="alertLevelEnumAlertLevelEnumId1" column="alert_level_enum_alert_level_enum_id_1"/>
+
+        <result property="password" column="password"/>
+
+        <result property="levelName" column="level_name"/>
+
+        <result property="alertTypeEnumAlertTypeEnumId1" column="alert_type_enum_alert_type_enum_id_1"/>
+
+        <result property="phoneNumber" column="phone_number"/>
+
+        <result property="processProgress" column="process_progress"/>
+
+        <result property="username" column="username"/>
+
+
+
+
+        </resultMap>
+
+<select id="selectListNew"  resultMap="selectListNewMap">
+select
+sa.alert_status_enum_alert_status_enum_id_1   ,
+ate.type_name   ,
+sa.create_time   ,
+ase.status_name   ,
+sa.description   ,
+ui.role_enum_role_enum_id_1   ,
+sa.security_alert_id   ,
+sa.report_user_info_user_info_id_1   ,
+sa.alert_level_enum_alert_level_enum_id_1   ,
+ui.password   ,
+ale.level_name   ,
+sa.alert_type_enum_alert_type_enum_id_1   ,
+ui.phone_number   ,
+sa.process_progress   ,
+ui.username   
+
+
+
+        FROM security_alert sa
+        left join
+
+        alert_type_enum
+
+        ate on sa.alert_type_enum_alert_type_enum_id_1 = ate.alert_type_enum_id
+        left join
+
+        alert_level_enum
+
+        ale on sa.alert_level_enum_alert_level_enum_id_1 = ale.alert_level_enum_id
+        left join
+
+        alert_status_enum
+
+        ase on sa.alert_status_enum_alert_status_enum_id_1 = ase.alert_status_enum_id
+        left join
+
+        user_info
+
+        ui on sa.report_user_info_user_info_id_1 = ui.user_info_id
+
+
+
+${ew.customSqlSegment}
+        </select>
+
+<select id="selectList" resultType="com.kuafu.web.entity.SecurityAlertAll">
+select
+sa.alert_status_enum_alert_status_enum_id_1   ,
+ate.type_name   ,
+sa.create_time   ,
+ase.status_name   ,
+sa.description   ,
+ui.role_enum_role_enum_id_1   ,
+sa.security_alert_id   ,
+sa.report_user_info_user_info_id_1   ,
+sa.alert_level_enum_alert_level_enum_id_1   ,
+ui.password   ,
+ale.level_name   ,
+sa.alert_type_enum_alert_type_enum_id_1   ,
+ui.phone_number   ,
+sa.process_progress   ,
+ui.username   
+
+
+        FROM security_alert sa
+        left join alert_type_enum ate on sa.alert_type_enum_alert_type_enum_id_1 = ate.alert_type_enum_id
+        left join alert_level_enum ale on sa.alert_level_enum_alert_level_enum_id_1 = ale.alert_level_enum_id
+        left join alert_status_enum ase on sa.alert_status_enum_alert_status_enum_id_1 = ase.alert_status_enum_id
+        left join user_info ui on sa.report_user_info_user_info_id_1 = ui.user_info_id
+
+
+${ew.customSqlSegment}
+        </select>
+
+<select id="selectPage" resultType="com.kuafu.web.entity.SecurityAlertAll">
+select
+sa.alert_status_enum_alert_status_enum_id_1  ,
+ate.type_name  ,
+sa.create_time  ,
+ase.status_name  ,
+sa.description  ,
+ui.role_enum_role_enum_id_1  ,
+sa.security_alert_id  ,
+sa.report_user_info_user_info_id_1  ,
+sa.alert_level_enum_alert_level_enum_id_1  ,
+ui.password  ,
+ale.level_name  ,
+sa.alert_type_enum_alert_type_enum_id_1  ,
+ui.phone_number  ,
+sa.process_progress  ,
+ui.username  
+
+
+
+        FROM security_alert sa
+        left join alert_type_enum ate on sa.alert_type_enum_alert_type_enum_id_1 = ate.alert_type_enum_id
+        left join alert_level_enum ale on sa.alert_level_enum_alert_level_enum_id_1 = ale.alert_level_enum_id
+        left join alert_status_enum ase on sa.alert_status_enum_alert_status_enum_id_1 = ase.alert_status_enum_id
+        left join user_info ui on sa.report_user_info_user_info_id_1 = ui.user_info_id
+
+
+
+
+
+${ew.customSqlSegment}
+        </select>
+
+<select id="selectById" resultType="com.kuafu.web.entity.SecurityAlertAll">
+select
+sa.alert_status_enum_alert_status_enum_id_1  ,
+ate.type_name  ,
+sa.create_time  ,
+ase.status_name  ,
+sa.description  ,
+ui.role_enum_role_enum_id_1  ,
+sa.security_alert_id  ,
+sa.report_user_info_user_info_id_1  ,
+sa.alert_level_enum_alert_level_enum_id_1  ,
+ui.password  ,
+ale.level_name  ,
+sa.alert_type_enum_alert_type_enum_id_1  ,
+ui.phone_number  ,
+sa.process_progress  ,
+ui.username  
+
+
+        FROM security_alert sa
+        left join alert_type_enum ate on sa.alert_type_enum_alert_type_enum_id_1 = ate.alert_type_enum_id
+        left join alert_level_enum ale on sa.alert_level_enum_alert_level_enum_id_1 = ale.alert_level_enum_id
+        left join alert_status_enum ase on sa.alert_status_enum_alert_status_enum_id_1 = ase.alert_status_enum_id
+        left join user_info ui on sa.report_user_info_user_info_id_1 = ui.user_info_id
+
+
+
+        where sa.security_alert_id = #{id}
+        </select>
+
+<select id="selectCount" resultType="java.lang.Long">
+select
+count(*)
+
+
+
+FROM security_alert sa
+left join alert_type_enum ate on sa.alert_type_enum_alert_type_enum_id_1 = ate.alert_type_enum_id
+left join alert_level_enum ale on sa.alert_level_enum_alert_level_enum_id_1 = ale.alert_level_enum_id
+left join alert_status_enum ase on sa.alert_status_enum_alert_status_enum_id_1 = ase.alert_status_enum_id
+left join user_info ui on sa.report_user_info_user_info_id_1 = ui.user_info_id
+
+
+
+${ew.customSqlSegment}
+
+
+        </select>
+
+        </mapper>

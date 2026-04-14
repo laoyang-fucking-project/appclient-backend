@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kuafu.web.mapper.PropertyServiceRequestAllMapper">
+    <sql id="property_service_request_list_sql">
+        select
+        rte.type_name   ,
+        psr.user_info_user_info_id_1   ,
+        psr.create_time   ,
+        psr.request_status_enum_request_status_enum_id_1   ,
+        rse.status_name   ,
+        psr.property_service_request_id   ,
+        psr.description   ,
+        ui.role_enum_role_enum_id_1   ,
+        ui.password   ,
+        psr.request_type_enum_request_type_enum_id_1   ,
+        ui.phone_number   ,
+        psr.process_progress   ,
+        ui.username   
+
+
+        FROM property_service_request psr
+        left join request_type_enum rte on psr.request_type_enum_request_type_enum_id_1 = rte.request_type_enum_id
+        left join request_status_enum rse on psr.request_status_enum_request_status_enum_id_1 = rse.request_status_enum_id
+        left join user_info ui on psr.user_info_user_info_id_1 = ui.user_info_id
+
+        </sql>
+
+        <resultMap id="selectListNewMap" type="com.kuafu.web.entity.PropertyServiceRequestAll">
+
+        <result property="typeName" column="type_name"/>
+
+        <result property="userInfoUserInfoId1" column="user_info_user_info_id_1"/>
+
+        <result property="createTime" column="create_time"/>
+
+        <result property="requestStatusEnumRequestStatusEnumId1" column="request_status_enum_request_status_enum_id_1"/>
+
+        <result property="statusName" column="status_name"/>
+
+        <result property="propertyServiceRequestId" column="property_service_request_id"/>
+
+        <result property="description" column="description"/>
+
+        <result property="roleEnumRoleEnumId1" column="role_enum_role_enum_id_1"/>
+
+        <result property="password" column="password"/>
+
+        <result property="requestTypeEnumRequestTypeEnumId1" column="request_type_enum_request_type_enum_id_1"/>
+
+        <result property="phoneNumber" column="phone_number"/>
+
+        <result property="processProgress" column="process_progress"/>
+
+        <result property="username" column="username"/>
+
+
+
+
+        </resultMap>
+
+<select id="selectListNew"  resultMap="selectListNewMap">
+select
+rte.type_name   ,
+psr.user_info_user_info_id_1   ,
+psr.create_time   ,
+psr.request_status_enum_request_status_enum_id_1   ,
+rse.status_name   ,
+psr.property_service_request_id   ,
+psr.description   ,
+ui.role_enum_role_enum_id_1   ,
+ui.password   ,
+psr.request_type_enum_request_type_enum_id_1   ,
+ui.phone_number   ,
+psr.process_progress   ,
+ui.username   
+
+
+
+        FROM property_service_request psr
+        left join
+
+        request_type_enum
+
+        rte on psr.request_type_enum_request_type_enum_id_1 = rte.request_type_enum_id
+        left join
+
+        request_status_enum
+
+        rse on psr.request_status_enum_request_status_enum_id_1 = rse.request_status_enum_id
+        left join
+
+        user_info
+
+        ui on psr.user_info_user_info_id_1 = ui.user_info_id
+
+
+
+${ew.customSqlSegment}
+        </select>
+
+<select id="selectList" resultType="com.kuafu.web.entity.PropertyServiceRequestAll">
+select
+rte.type_name   ,
+psr.user_info_user_info_id_1   ,
+psr.create_time   ,
+psr.request_status_enum_request_status_enum_id_1   ,
+rse.status_name   ,
+psr.property_service_request_id   ,
+psr.description   ,
+ui.role_enum_role_enum_id_1   ,
+ui.password   ,
+psr.request_type_enum_request_type_enum_id_1   ,
+ui.phone_number   ,
+psr.process_progress   ,
+ui.username   
+
+
+        FROM property_service_request psr
+        left join request_type_enum rte on psr.request_type_enum_request_type_enum_id_1 = rte.request_type_enum_id
+        left join request_status_enum rse on psr.request_status_enum_request_status_enum_id_1 = rse.request_status_enum_id
+        left join user_info ui on psr.user_info_user_info_id_1 = ui.user_info_id
+
+
+${ew.customSqlSegment}
+        </select>
+
+<select id="selectPage" resultType="com.kuafu.web.entity.PropertyServiceRequestAll">
+select
+rte.type_name  ,
+psr.user_info_user_info_id_1  ,
+psr.create_time  ,
+psr.request_status_enum_request_status_enum_id_1  ,
+rse.status_name  ,
+psr.property_service_request_id  ,
+psr.description  ,
+ui.role_enum_role_enum_id_1  ,
+ui.password  ,
+psr.request_type_enum_request_type_enum_id_1  ,
+ui.phone_number  ,
+psr.process_progress  ,
+ui.username  
+
+
+
+        FROM property_service_request psr
+        left join request_type_enum rte on psr.request_type_enum_request_type_enum_id_1 = rte.request_type_enum_id
+        left join request_status_enum rse on psr.request_status_enum_request_status_enum_id_1 = rse.request_status_enum_id
+        left join user_info ui on psr.user_info_user_info_id_1 = ui.user_info_id
+
+
+
+
+
+${ew.customSqlSegment}
+        </select>
+
+<select id="selectById" resultType="com.kuafu.web.entity.PropertyServiceRequestAll">
+select
+rte.type_name  ,
+psr.user_info_user_info_id_1  ,
+psr.create_time  ,
+psr.request_status_enum_request_status_enum_id_1  ,
+rse.status_name  ,
+psr.property_service_request_id  ,
+psr.description  ,
+ui.role_enum_role_enum_id_1  ,
+ui.password  ,
+psr.request_type_enum_request_type_enum_id_1  ,
+ui.phone_number  ,
+psr.process_progress  ,
+ui.username  
+
+
+        FROM property_service_request psr
+        left join request_type_enum rte on psr.request_type_enum_request_type_enum_id_1 = rte.request_type_enum_id
+        left join request_status_enum rse on psr.request_status_enum_request_status_enum_id_1 = rse.request_status_enum_id
+        left join user_info ui on psr.user_info_user_info_id_1 = ui.user_info_id
+
+
+
+        where psr.property_service_request_id = #{id}
+        </select>
+
+<select id="selectCount" resultType="java.lang.Long">
+select
+count(*)
+
+
+
+FROM property_service_request psr
+left join request_type_enum rte on psr.request_type_enum_request_type_enum_id_1 = rte.request_type_enum_id
+left join request_status_enum rse on psr.request_status_enum_request_status_enum_id_1 = rse.request_status_enum_id
+left join user_info ui on psr.user_info_user_info_id_1 = ui.user_info_id
+
+
+
+${ew.customSqlSegment}
+
+
+        </select>
+
+        </mapper>
