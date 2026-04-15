@@ -51,7 +51,7 @@ import org.springframework.context.annotation.Lazy;
  *
  * @author kuafuai
  * @description
- * @date 2026/03/27 09:59
+ * @date 2026/04/14 21:40
  */
 @Service("CareModeSettingAllControllerService")
 public class CareModeSettingAllControllerService implements IControllerService<CareModeSettingAll> {

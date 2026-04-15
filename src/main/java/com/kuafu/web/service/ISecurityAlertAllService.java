@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  *
  * @author kuafuai
  * @description
- * @date 2026/03/27 09:59
+ * @date 2026/04/14 21:40
  */
 public interface ISecurityAlertAllService extends IService<SecurityAlertAll> {
         List<SecurityAlertAll> selectListNew(PageRequest pageRequest, LambdaQueryWrapper<SecurityAlertAll> queryWrapper);

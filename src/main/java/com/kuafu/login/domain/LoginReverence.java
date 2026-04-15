@@ -23,6 +23,12 @@ public enum LoginReverence {
         deviceStatusEnum("设备状态","deviceStatusEnum"),
         deviceStatus("设备状态","deviceStatus"),
         careModeSetting("关怀模式","careModeSetting"),
+        smartDeviceTypeEnum("设备类型枚举表","smartDeviceTypeEnum"),
+        smartDeviceStatusEnum("设备状态枚举表","smartDeviceStatusEnum"),
+        smartHomeDevice("智能家居设备表","smartHomeDevice"),
+        deviceControlLog("设备控制记录表","deviceControlLog"),
+        sensorDataRecord("传感器数据记录表","sensorDataRecord"),
+        deviceAlertRecord("设备告警记录表","deviceAlertRecord"),
     ;
 
 

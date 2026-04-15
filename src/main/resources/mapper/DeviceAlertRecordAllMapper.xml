@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kuafu.web.mapper.DeviceAlertRecordAllMapper">
+    <sql id="device_alert_record_list_sql">
+        select
+        dar.device_alert_record_id   ,
+        shd.user_info_user_info_id_1   ,
+        dar.create_time   ,
+        dar.alert_message   ,
+        shd.smart_device_type_enum_smart_device_type_enum_id_1   ,
+        shd.is_on   ,
+        dar.alert_type   ,
+        shd.current_value   ,
+        shd.room_name   ,
+        shd.last_update_time   ,
+        dar.smart_home_device_smart_device_id_1   ,
+        shd.device_name   ,
+        shd.brightness   ,
+        dar.is_resolved   ,
+        shd.smart_device_status_enum_smart_device_status_enum_id_1   ,
+        dar.alert_level   
+
+
+        FROM device_alert_record dar
+        left join smart_home_device shd on dar.smart_home_device_smart_device_id_1 = shd.smart_device_id
+
+        </sql>
+
+        <resultMap id="selectListNewMap" type="com.kuafu.web.entity.DeviceAlertRecordAll">
+
+        <result property="deviceAlertRecordId" column="device_alert_record_id"/>
+
+        <result property="userInfoUserInfoId1" column="user_info_user_info_id_1"/>
+
+        <result property="createTime" column="create_time"/>
+
+        <result property="alertMessage" column="alert_message"/>
+
+        <result property="smartDeviceTypeEnumSmartDeviceTypeEnumId1" column="smart_device_type_enum_smart_device_type_enum_id_1"/>
+
+        <result property="isOn" column="is_on"/>
+
+        <result property="alertType" column="alert_type"/>
+
+        <result property="currentValue" column="current_value"/>
+
+        <result property="roomName" column="room_name"/>
+
+        <result property="lastUpdateTime" column="last_update_time"/>
+
+        <result property="smartHomeDeviceSmartDeviceId1" column="smart_home_device_smart_device_id_1"/>
+
+        <result property="deviceName" column="device_name"/>
+
+        <result property="brightness" column="brightness"/>
+
+        <result property="isResolved" column="is_resolved"/>
+
+        <result property="smartDeviceStatusEnumSmartDeviceStatusEnumId1" column="smart_device_status_enum_smart_device_status_enum_id_1"/>
+
+        <result property="alertLevel" column="alert_level"/>
+
+
+
+
+        </resultMap>
+
+<select id="selectListNew"  resultMap="selectListNewMap">
+select
+dar.device_alert_record_id   ,
+shd.user_info_user_info_id_1   ,
+dar.create_time   ,
+dar.alert_message   ,
+shd.smart_device_type_enum_smart_device_type_enum_id_1   ,
+shd.is_on   ,
+dar.alert_type   ,
+shd.current_value   ,
+shd.room_name   ,
+shd.last_update_time   ,
+dar.smart_home_device_smart_device_id_1   ,
+shd.device_name   ,
+shd.brightness   ,
+dar.is_resolved   ,
+shd.smart_device_status_enum_smart_device_status_enum_id_1   ,
+dar.alert_level   
+
+
+
+        FROM device_alert_record dar
+        left join
+
+        smart_home_device
+
+        shd on dar.smart_home_device_smart_device_id_1 = shd.smart_device_id
+
+
+
+${ew.customSqlSegment}
+        </select>
+
+<select id="selectList" resultType="com.kuafu.web.entity.DeviceAlertRecordAll">
+select
+dar.device_alert_record_id   ,
+shd.user_info_user_info_id_1   ,
+dar.create_time   ,
+dar.alert_message   ,
+shd.smart_device_type_enum_smart_device_type_enum_id_1   ,
+shd.is_on   ,
+dar.alert_type   ,
+shd.current_value   ,
+shd.room_name   ,
+shd.last_update_time   ,
+dar.smart_home_device_smart_device_id_1   ,
+shd.device_name   ,
+shd.brightness   ,
+dar.is_resolved   ,
+shd.smart_device_status_enum_smart_device_status_enum_id_1   ,
+dar.alert_level   
+
+
+        FROM device_alert_record dar
+        left join smart_home_device shd on dar.smart_home_device_smart_device_id_1 = shd.smart_device_id
+
+
+${ew.customSqlSegment}
+        </select>
+
+<select id="selectPage" resultType="com.kuafu.web.entity.DeviceAlertRecordAll">
+select
+dar.device_alert_record_id  ,
+shd.user_info_user_info_id_1  ,
+dar.create_time  ,
+dar.alert_message  ,
+shd.smart_device_type_enum_smart_device_type_enum_id_1  ,
+shd.is_on  ,
+dar.alert_type  ,
+shd.current_value  ,
+shd.room_name  ,
+shd.last_update_time  ,
+dar.smart_home_device_smart_device_id_1  ,
+shd.device_name  ,
+shd.brightness  ,
+dar.is_resolved  ,
+shd.smart_device_status_enum_smart_device_status_enum_id_1  ,
+dar.alert_level  
+
+
+
+        FROM device_alert_record dar
+        left join smart_home_device shd on dar.smart_home_device_smart_device_id_1 = shd.smart_device_id
+
+
+
+
+
+${ew.customSqlSegment}
+        </select>
+
+<select id="selectById" resultType="com.kuafu.web.entity.DeviceAlertRecordAll">
+select
+dar.device_alert_record_id  ,
+shd.user_info_user_info_id_1  ,
+dar.create_time  ,
+dar.alert_message  ,
+shd.smart_device_type_enum_smart_device_type_enum_id_1  ,
+shd.is_on  ,
+dar.alert_type  ,
+shd.current_value  ,
+shd.room_name  ,
+shd.last_update_time  ,
+dar.smart_home_device_smart_device_id_1  ,
+shd.device_name  ,
+shd.brightness  ,
+dar.is_resolved  ,
+shd.smart_device_status_enum_smart_device_status_enum_id_1  ,
+dar.alert_level  
+
+
+        FROM device_alert_record dar
+        left join smart_home_device shd on dar.smart_home_device_smart_device_id_1 = shd.smart_device_id
+
+
+
+        where dar.device_alert_record_id = #{id}
+        </select>
+
+<select id="selectCount" resultType="java.lang.Long">
+select
+count(*)
+
+
+
+FROM device_alert_record dar
+left join smart_home_device shd on dar.smart_home_device_smart_device_id_1 = shd.smart_device_id
+
+
+
+${ew.customSqlSegment}
+
+
+        </select>
+
+        </mapper>

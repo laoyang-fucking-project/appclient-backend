@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kuafu.web.mapper.SmartHomeDeviceAllMapper">
+    <sql id="smart_home_device_list_sql">
+        select
+        sdte.type_name   ,
+        shd.user_info_user_info_id_1   ,
+        sdse.status_name   ,
+        shd.smart_device_type_enum_smart_device_type_enum_id_1   ,
+        shd.is_on   ,
+        ui.role_enum_role_enum_id_1   ,
+        shd.smart_device_id   ,
+        shd.current_value   ,
+        shd.room_name   ,
+        shd.last_update_time   ,
+        shd.device_name   ,
+        ui.password   ,
+        shd.brightness   ,
+        shd.smart_device_status_enum_smart_device_status_enum_id_1   ,
+        ui.phone_number   ,
+        ui.username   
+
+
+        FROM smart_home_device shd
+        left join smart_device_type_enum sdte on shd.smart_device_type_enum_smart_device_type_enum_id_1 = sdte.smart_device_type_enum_id
+        left join smart_device_status_enum sdse on shd.smart_device_status_enum_smart_device_status_enum_id_1 = sdse.smart_device_status_enum_id
+        left join user_info ui on shd.user_info_user_info_id_1 = ui.user_info_id
+
+        </sql>
+
+        <resultMap id="selectListNewMap" type="com.kuafu.web.entity.SmartHomeDeviceAll">
+
+        <result property="typeName" column="type_name"/>
+
+        <result property="userInfoUserInfoId1" column="user_info_user_info_id_1"/>
+
+        <result property="statusName" column="status_name"/>
+
+        <result property="smartDeviceTypeEnumSmartDeviceTypeEnumId1" column="smart_device_type_enum_smart_device_type_enum_id_1"/>
+
+        <result property="isOn" column="is_on"/>
+
+        <result property="roleEnumRoleEnumId1" column="role_enum_role_enum_id_1"/>
+
+        <result property="smartDeviceId" column="smart_device_id"/>
+
+        <result property="currentValue" column="current_value"/>
+
+        <result property="roomName" column="room_name"/>
+
+        <result property="lastUpdateTime" column="last_update_time"/>
+
+        <result property="deviceName" column="device_name"/>
+
+        <result property="password" column="password"/>
+
+        <result property="brightness" column="brightness"/>
+
+        <result property="smartDeviceStatusEnumSmartDeviceStatusEnumId1" column="smart_device_status_enum_smart_device_status_enum_id_1"/>
+
+        <result property="phoneNumber" column="phone_number"/>
+
+        <result property="username" column="username"/>
+
+
+
+
+        </resultMap>
+
+<select id="selectListNew"  resultMap="selectListNewMap">
+select
+sdte.type_name   ,
+shd.user_info_user_info_id_1   ,
+sdse.status_name   ,
+shd.smart_device_type_enum_smart_device_type_enum_id_1   ,
+shd.is_on   ,
+ui.role_enum_role_enum_id_1   ,
+shd.smart_device_id   ,
+shd.current_value   ,
+shd.room_name   ,
+shd.last_update_time   ,
+shd.device_name   ,
+ui.password   ,
+shd.brightness   ,
+shd.smart_device_status_enum_smart_device_status_enum_id_1   ,
+ui.phone_number   ,
+ui.username   
+
+
+
+        FROM smart_home_device shd
+        left join
+
+        smart_device_type_enum
+
+        sdte on shd.smart_device_type_enum_smart_device_type_enum_id_1 = sdte.smart_device_type_enum_id
+        left join
+
+        smart_device_status_enum
+
+        sdse on shd.smart_device_status_enum_smart_device_status_enum_id_1 = sdse.smart_device_status_enum_id
+        left join
+
+        user_info
+
+        ui on shd.user_info_user_info_id_1 = ui.user_info_id
+
+
+
+${ew.customSqlSegment}
+        </select>
+
+<select id="selectList" resultType="com.kuafu.web.entity.SmartHomeDeviceAll">
+select
+sdte.type_name   ,
+shd.user_info_user_info_id_1   ,
+sdse.status_name   ,
+shd.smart_device_type_enum_smart_device_type_enum_id_1   ,
+shd.is_on   ,
+ui.role_enum_role_enum_id_1   ,
+shd.smart_device_id   ,
+shd.current_value   ,
+shd.room_name   ,
+shd.last_update_time   ,
+shd.device_name   ,
+ui.password   ,
+shd.brightness   ,
+shd.smart_device_status_enum_smart_device_status_enum_id_1   ,
+ui.phone_number   ,
+ui.username   
+
+
+        FROM smart_home_device shd
+        left join smart_device_type_enum sdte on shd.smart_device_type_enum_smart_device_type_enum_id_1 = sdte.smart_device_type_enum_id
+        left join smart_device_status_enum sdse on shd.smart_device_status_enum_smart_device_status_enum_id_1 = sdse.smart_device_status_enum_id
+        left join user_info ui on shd.user_info_user_info_id_1 = ui.user_info_id
+
+
+${ew.customSqlSegment}
+        </select>
+
+<select id="selectPage" resultType="com.kuafu.web.entity.SmartHomeDeviceAll">
+select
+sdte.type_name  ,
+shd.user_info_user_info_id_1  ,
+sdse.status_name  ,
+shd.smart_device_type_enum_smart_device_type_enum_id_1  ,
+shd.is_on  ,
+ui.role_enum_role_enum_id_1  ,
+shd.smart_device_id  ,
+shd.current_value  ,
+shd.room_name  ,
+shd.last_update_time  ,
+shd.device_name  ,
+ui.password  ,
+shd.brightness  ,
+shd.smart_device_status_enum_smart_device_status_enum_id_1  ,
+ui.phone_number  ,
+ui.username  
+
+
+
+        FROM smart_home_device shd
+        left join smart_device_type_enum sdte on shd.smart_device_type_enum_smart_device_type_enum_id_1 = sdte.smart_device_type_enum_id
+        left join smart_device_status_enum sdse on shd.smart_device_status_enum_smart_device_status_enum_id_1 = sdse.smart_device_status_enum_id
+        left join user_info ui on shd.user_info_user_info_id_1 = ui.user_info_id
+
+
+
+
+
+${ew.customSqlSegment}
+        </select>
+
+<select id="selectById" resultType="com.kuafu.web.entity.SmartHomeDeviceAll">
+select
+sdte.type_name  ,
+shd.user_info_user_info_id_1  ,
+sdse.status_name  ,
+shd.smart_device_type_enum_smart_device_type_enum_id_1  ,
+shd.is_on  ,
+ui.role_enum_role_enum_id_1  ,
+shd.smart_device_id  ,
+shd.current_value  ,
+shd.room_name  ,
+shd.last_update_time  ,
+shd.device_name  ,
+ui.password  ,
+shd.brightness  ,
+shd.smart_device_status_enum_smart_device_status_enum_id_1  ,
+ui.phone_number  ,
+ui.username  
+
+
+        FROM smart_home_device shd
+        left join smart_device_type_enum sdte on shd.smart_device_type_enum_smart_device_type_enum_id_1 = sdte.smart_device_type_enum_id
+        left join smart_device_status_enum sdse on shd.smart_device_status_enum_smart_device_status_enum_id_1 = sdse.smart_device_status_enum_id
+        left join user_info ui on shd.user_info_user_info_id_1 = ui.user_info_id
+
+
+
+        where shd.smart_device_id = #{id}
+        </select>
+
+<select id="selectCount" resultType="java.lang.Long">
+select
+count(*)
+
+
+
+FROM smart_home_device shd
+left join smart_device_type_enum sdte on shd.smart_device_type_enum_smart_device_type_enum_id_1 = sdte.smart_device_type_enum_id
+left join smart_device_status_enum sdse on shd.smart_device_status_enum_smart_device_status_enum_id_1 = sdse.smart_device_status_enum_id
+left join user_info ui on shd.user_info_user_info_id_1 = ui.user_info_id
+
+
+
+${ew.customSqlSegment}
+
+
+        </select>
+
+        </mapper>

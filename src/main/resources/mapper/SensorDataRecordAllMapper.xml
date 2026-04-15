@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kuafu.web.mapper.SensorDataRecordAllMapper">
+    <sql id="sensor_data_record_list_sql">
+        select
+        shd.user_info_user_info_id_1   ,
+        sdr.sensor_data_record_id   ,
+        shd.smart_device_type_enum_smart_device_type_enum_id_1   ,
+        shd.is_on   ,
+        sdr.sensor_value   ,
+        shd.current_value   ,
+        shd.room_name   ,
+        shd.last_update_time   ,
+        sdr.smart_home_device_smart_device_id_1   ,
+        shd.device_name   ,
+        shd.brightness   ,
+        shd.smart_device_status_enum_smart_device_status_enum_id_1   ,
+        sdr.record_time   
+
+
+        FROM sensor_data_record sdr
+        left join smart_home_device shd on sdr.smart_home_device_smart_device_id_1 = shd.smart_device_id
+
+        </sql>
+
+        <resultMap id="selectListNewMap" type="com.kuafu.web.entity.SensorDataRecordAll">
+
+        <result property="userInfoUserInfoId1" column="user_info_user_info_id_1"/>
+
+        <result property="sensorDataRecordId" column="sensor_data_record_id"/>
+
+        <result property="smartDeviceTypeEnumSmartDeviceTypeEnumId1" column="smart_device_type_enum_smart_device_type_enum_id_1"/>
+
+        <result property="isOn" column="is_on"/>
+
+        <result property="sensorValue" column="sensor_value"/>
+
+        <result property="currentValue" column="current_value"/>
+
+        <result property="roomName" column="room_name"/>
+
+        <result property="lastUpdateTime" column="last_update_time"/>
+
+        <result property="smartHomeDeviceSmartDeviceId1" column="smart_home_device_smart_device_id_1"/>
+
+        <result property="deviceName" column="device_name"/>
+
+        <result property="brightness" column="brightness"/>
+
+        <result property="smartDeviceStatusEnumSmartDeviceStatusEnumId1" column="smart_device_status_enum_smart_device_status_enum_id_1"/>
+
+        <result property="recordTime" column="record_time"/>
+
+
+
+
+        </resultMap>
+
+<select id="selectListNew"  resultMap="selectListNewMap">
+select
+shd.user_info_user_info_id_1   ,
+sdr.sensor_data_record_id   ,
+shd.smart_device_type_enum_smart_device_type_enum_id_1   ,
+shd.is_on   ,
+sdr.sensor_value   ,
+shd.current_value   ,
+shd.room_name   ,
+shd.last_update_time   ,
+sdr.smart_home_device_smart_device_id_1   ,
+shd.device_name   ,
+shd.brightness   ,
+shd.smart_device_status_enum_smart_device_status_enum_id_1   ,
+sdr.record_time   
+
+
+
+        FROM sensor_data_record sdr
+        left join
+
+        smart_home_device
+
+        shd on sdr.smart_home_device_smart_device_id_1 = shd.smart_device_id
+
+
+
+${ew.customSqlSegment}
+        </select>
+
+<select id="selectList" resultType="com.kuafu.web.entity.SensorDataRecordAll">
+select
+shd.user_info_user_info_id_1   ,
+sdr.sensor_data_record_id   ,
+shd.smart_device_type_enum_smart_device_type_enum_id_1   ,
+shd.is_on   ,
+sdr.sensor_value   ,
+shd.current_value   ,
+shd.room_name   ,
+shd.last_update_time   ,
+sdr.smart_home_device_smart_device_id_1   ,
+shd.device_name   ,
+shd.brightness   ,
+shd.smart_device_status_enum_smart_device_status_enum_id_1   ,
+sdr.record_time   
+
+
+        FROM sensor_data_record sdr
+        left join smart_home_device shd on sdr.smart_home_device_smart_device_id_1 = shd.smart_device_id
+
+
+${ew.customSqlSegment}
+        </select>
+
+<select id="selectPage" resultType="com.kuafu.web.entity.SensorDataRecordAll">
+select
+shd.user_info_user_info_id_1  ,
+sdr.sensor_data_record_id  ,
+shd.smart_device_type_enum_smart_device_type_enum_id_1  ,
+shd.is_on  ,
+sdr.sensor_value  ,
+shd.current_value  ,
+shd.room_name  ,
+shd.last_update_time  ,
+sdr.smart_home_device_smart_device_id_1  ,
+shd.device_name  ,
+shd.brightness  ,
+shd.smart_device_status_enum_smart_device_status_enum_id_1  ,
+sdr.record_time  
+
+
+
+        FROM sensor_data_record sdr
+        left join smart_home_device shd on sdr.smart_home_device_smart_device_id_1 = shd.smart_device_id
+
+
+
+
+
+${ew.customSqlSegment}
+        </select>
+
+<select id="selectById" resultType="com.kuafu.web.entity.SensorDataRecordAll">
+select
+shd.user_info_user_info_id_1  ,
+sdr.sensor_data_record_id  ,
+shd.smart_device_type_enum_smart_device_type_enum_id_1  ,
+shd.is_on  ,
+sdr.sensor_value  ,
+shd.current_value  ,
+shd.room_name  ,
+shd.last_update_time  ,
+sdr.smart_home_device_smart_device_id_1  ,
+shd.device_name  ,
+shd.brightness  ,
+shd.smart_device_status_enum_smart_device_status_enum_id_1  ,
+sdr.record_time  
+
+
+        FROM sensor_data_record sdr
+        left join smart_home_device shd on sdr.smart_home_device_smart_device_id_1 = shd.smart_device_id
+
+
+
+        where sdr.sensor_data_record_id = #{id}
+        </select>
+
+<select id="selectCount" resultType="java.lang.Long">
+select
+count(*)
+
+
+
+FROM sensor_data_record sdr
+left join smart_home_device shd on sdr.smart_home_device_smart_device_id_1 = shd.smart_device_id
+
+
+
+${ew.customSqlSegment}
+
+
+        </select>
+
+        </mapper>
