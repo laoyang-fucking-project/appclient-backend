@@ -24,7 +24,6 @@ import lombok.NoArgsConstructor;
  * @description
  * @date 2026/03/27 09:59
  */
-@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -47,6 +46,54 @@ public class UserInfoAll {
     @TableField(value="ui.username")
     @JsonProperty("username")
     private String username;
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Integer getRoleEnumRoleEnumId1() {
+        return roleEnumRoleEnumId1;
+    }
+
+    public void setRoleEnumRoleEnumId1(Integer roleEnumRoleEnumId1) {
+        this.roleEnumRoleEnumId1 = roleEnumRoleEnumId1;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Integer getUserInfoId() {
+        return userInfoId;
+    }
+
+    public void setUserInfoId(Integer userInfoId) {
+        this.userInfoId = userInfoId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
 
 

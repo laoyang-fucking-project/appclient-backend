@@ -20,7 +20,6 @@ import com.kuafu.common.entity.StaticResource;
  * @description
  * @date 2026/03/27 09:59
  */
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -38,5 +37,69 @@ public class UserInfoAllPageVO extends BaseEntity {
     private Integer userInfoId;
 @JsonProperty("username")
     private String username;
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Integer getRoleEnumRoleEnumId1() {
+        return roleEnumRoleEnumId1;
+    }
+
+    public void setRoleEnumRoleEnumId1(Integer roleEnumRoleEnumId1) {
+        this.roleEnumRoleEnumId1 = roleEnumRoleEnumId1;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Integer getUserInfoId() {
+        return userInfoId;
+    }
+
+    public void setUserInfoId(Integer userInfoId) {
+        this.userInfoId = userInfoId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public long getCurrent() {
+        return super.getCurrent();
+    }
+
+    public void setCurrent(long current) {
+        super.setCurrent(current);
+    }
+
+    public long getPageSize() {
+        return super.getPageSize();
+    }
+
+    public void setPageSize(long pageSize) {
+        super.setPageSize(pageSize);
+    }
 
 }
