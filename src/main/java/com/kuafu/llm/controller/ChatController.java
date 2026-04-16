@@ -1,5 +1,8 @@
 package com.kuafu.llm.controller;
 
+import com.kuafu.common.domin.ResultUtils;
+import com.kuafu.common.login.LoginUser;
+import com.kuafu.common.login.SecurityUtils;
 import com.kuafu.llm.chat.Chat;
 import com.kuafu.llm.config.LLMStartBusiness;
 import com.kuafu.llm.config.PromptConfig;
@@ -15,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -39,13 +45,17 @@ public class ChatController {
      * @return
      */
     @PostMapping("")
-    public SseEmitter stream(@RequestBody ChatRequest chatRequest) {
-        // 用于创建一个 SSE 连接对象
-        SseEmitter emitter = new SseEmitter(3600000L);
+    public Object stream(@RequestBody ChatRequest chatRequest, HttpServletRequest request) {
+        if (StringUtils.isBlank(chatRequest.getQuery())) {
+            return ResultUtils.error("query不能为空");
+        }
+
         List<String> search = llmStartBusiness.search(chatRequest.getQuery());
         log.info("embedding search: {}", search);
 
-        String conversionId = chatRequest.getConversionId();
+        String conversionId = chatRequest.getResolvedConversationId();
+
+        String userId = resolveUserId(chatRequest.getUserId());
 
         String query = chatRequest.getQuery();
 
@@ -65,10 +75,54 @@ public class ChatController {
 
         log.info("content : {}", query);
 
-        chat.callApiStream(query, conversionId, chatRequest.getUserId(), emitter);
+        if (isStreamRequest(chatRequest, request)) {
+            // 用于创建一个 SSE 连接对象
+            SseEmitter emitter = new SseEmitter(3600000L);
+            chat.callApiStream(query, conversionId, userId, emitter);
+            return emitter;
+        }
 
-        // 在后台线程中模拟实时数据
-        return emitter;
+        ChatResponse chatResponse = chat.callApiBlock(query, conversionId, userId);
+        if (chatResponse == null) {
+            return ResultUtils.error("聊天服务暂时不可用");
+        }
+
+        String nextConversationId = chatResponse.getConversionId();
+        if (StringUtils.isBlank(nextConversationId)) {
+            nextConversationId = conversionId;
+        }
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("answer", chatResponse.getAnswer());
+        data.put("conversationId", nextConversationId);
+        data.put("conversation_id", nextConversationId);
+        return ResultUtils.success(data);
+    }
+
+    private boolean isStreamRequest(ChatRequest chatRequest, HttpServletRequest request) {
+        if (Boolean.TRUE.equals(chatRequest.getStream())) {
+            return true;
+        }
+        String accept = request.getHeader("Accept");
+        return StringUtils.containsIgnoreCase(accept, "text/event-stream");
+    }
+
+    private String resolveUserId(String requestUserId) {
+        if (StringUtils.isNotBlank(requestUserId)) {
+            return requestUserId;
+        }
+        try {
+            LoginUser loginUser = SecurityUtils.getLoginUser();
+            if (loginUser != null && loginUser.getUserId() != null) {
+                return String.valueOf(loginUser.getUserId());
+            }
+            if (loginUser != null && StringUtils.isNotBlank(loginUser.getRelevanceId())) {
+                return loginUser.getRelevanceId();
+            }
+        } catch (Exception e) {
+            log.debug("resolve user id by login context failed: {}", e.getMessage());
+        }
+        return "anonymous";
     }
 
 }

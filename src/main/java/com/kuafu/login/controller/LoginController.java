@@ -123,24 +123,27 @@ public class LoginController {
     @ApiOperationSupport(includeParameters = {"loginVo.phone", "loginVo.password"})
     public BaseResponse loginByPasswd(@RequestBody LoginVo loginVo) {
         LoginRelevanceConfig.setLoginRelevanceTable(loginVo.getRelevanceTable());
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginVo.getPhone(), loginVo.getPassword());
-        Authentication returnAuth = authenticationManager.authenticate(authenticationToken);
-        LoginUser loginUser = (LoginUser) returnAuth.getPrincipal();
-        String token = tokenService.createToken(loginUser);
-        if (TenantContextHolder.getEnableTenant()) {
-            Integer tenantId = loginBusinessService.getUserTenantIdByLoginUser(loginUser);
-            if (tenantId != null) {
-                loginUser.setTenantId(tenantId);
+        try {
+            UsernamePasswordAuthenticationToken authenticationToken =
+                    new UsernamePasswordAuthenticationToken(loginVo.getPhone(), loginVo.getPassword());
+            Authentication returnAuth = authenticationManager.authenticate(authenticationToken);
+            LoginUser loginUser = (LoginUser) returnAuth.getPrincipal();
+            String token = tokenService.createToken(loginUser);
+            if (TenantContextHolder.getEnableTenant()) {
+                Integer tenantId = loginBusinessService.getUserTenantIdByLoginUser(loginUser);
+                if (tenantId != null) {
+                    loginUser.setTenantId(tenantId);
+                }
             }
-        }
-        if (StringUtils.isNotEmpty(loginVo.getOpenId())) {
-            final Long loginUserUserId = loginUser.getUserId();
-            loginBusinessService.updateOpenIdById(loginUserUserId, loginVo.getOpenId());
-        }
+            if (StringUtils.isNotEmpty(loginVo.getOpenId())) {
+                final Long loginUserUserId = loginUser.getUserId();
+                loginBusinessService.updateOpenIdById(loginUserUserId, loginVo.getOpenId());
+            }
 
-        LoginRelevanceConfig.remove();
-        return ResultUtils.success(token);
+            return ResultUtils.success(token);
+        } finally {
+            LoginRelevanceConfig.remove();
+        }
     }
 
     @PostMapping("/login/wxWeb")
@@ -194,9 +197,18 @@ public class LoginController {
     public BaseResponse getLoginUser() {
 //        final Object currentUser = loginBusinessService.getCurrentUser();
         final LoginUser loginUser = SecurityUtils.getLoginUser();
+        if (loginUser == null) {
+            return ResultUtils.error(ErrorCode.NOT_LOGIN_ERROR);
+        }
         loginUser.setToken(null);
         loginUser.setLoginTime(null);
-        loginUser.setUserId(Long.valueOf(loginUser.getRelevanceId()));
+        if (StringUtils.isNotEmpty(loginUser.getRelevanceId())) {
+            try {
+                loginUser.setUserId(Long.valueOf(loginUser.getRelevanceId()));
+            } catch (NumberFormatException e) {
+                log.warn("relevanceId cannot convert to userId: {}", loginUser.getRelevanceId());
+            }
+        }
         loginUser.setRelevanceTable(loginUser.getRelevanceTable());
         if (TenantContextHolder.getEnableTenant()) {
             Integer userTenantIdByLoginUser = loginBusinessService.getUserTenantIdByLoginUser(loginUser);
@@ -210,6 +222,45 @@ public class LoginController {
     @ApiOperation("发送验证码")
     @Log
     public BaseResponse sendCode(@RequestParam String phone) throws Exception {
+
+        return sendCodeInternal(phone);
+    }
+
+    /**
+     * 兼容前端历史路径：/login/phone/sendCode、/login/mail/sendCode
+     */
+    @PostMapping({"/login/phone/sendCode", "/login/mail/sendCode"})
+    @ApiOperation("发送验证码（兼容路径）")
+    @Log
+    public BaseResponse sendCodeCompat(
+            @RequestBody(required = false) Map<String, Object> body,
+            @RequestParam(value = "phone", required = false) String phone,
+            @RequestParam(value = "email", required = false) String email
+    ) throws Exception {
+        String receiver = phone;
+        if (StringUtils.isEmpty(receiver) && StringUtils.isNotEmpty(email)) {
+            receiver = email;
+        }
+        if (StringUtils.isEmpty(receiver) && body != null) {
+            Object phoneObj = body.get("phone");
+            if (phoneObj != null) {
+                receiver = String.valueOf(phoneObj);
+            }
+        }
+        if (StringUtils.isEmpty(receiver) && body != null) {
+            Object emailObj = body.get("email");
+            if (emailObj != null) {
+                receiver = String.valueOf(emailObj);
+            }
+        }
+        if (StringUtils.isEmpty(receiver)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "phone不能为空");
+        }
+
+        return sendCodeInternal(receiver);
+    }
+
+    private BaseResponse sendCodeInternal(String phone) throws Exception {
 
         final String numbers = RandomUtil.randomNumbers(6);
         log.info("获取的验证码是{}", numbers);

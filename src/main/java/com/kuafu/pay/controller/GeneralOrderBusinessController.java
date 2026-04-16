@@ -68,8 +68,23 @@ public class GeneralOrderBusinessController {
 
     @PostMapping("/callback/{payChannel}")
     @Log
-    public Object paySuccessCallback(@PathVariable String payChannel,@RequestBody String requestData, @RequestHeader Map<String, String> headers) {
-        log.info("paySuccessCallback payChannel:{},requestData:{},headers:{}", payChannel, requestData, headers);
-        return orderFacadeService.handleOrderCallback(payChannel,requestData,headers);
+    public Object paySuccessCallback(@PathVariable String payChannel, @RequestBody String requestData, @RequestHeader Map<String, String> headers) {
+        return doPaySuccessCallback(null, payChannel, requestData, headers);
+    }
+
+    @PostMapping("/callback/{appId}/{payChannel}")
+    @Log
+    public Object paySuccessCallbackWithAppId(
+            @PathVariable String appId,
+            @PathVariable String payChannel,
+            @RequestBody String requestData,
+            @RequestHeader Map<String, String> headers
+    ) {
+        return doPaySuccessCallback(appId, payChannel, requestData, headers);
+    }
+
+    private Object doPaySuccessCallback(String appId, String payChannel, String requestData, Map<String, String> headers) {
+        log.info("paySuccessCallback appId:{},payChannel:{},requestData:{},headers:{}", appId, payChannel, requestData, headers);
+        return orderFacadeService.handleOrderCallback(payChannel, requestData, headers);
     }
 }

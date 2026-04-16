@@ -157,28 +157,28 @@ create table general_orders
     field_name       varchar(255)
 );
 
-create index idx_orders_create_time
+create index if not exists idx_orders_create_time
     on general_orders (create_time);
 
-create index idx_orders_order_no
+create index if not exists idx_orders_order_no
     on general_orders (order_no);
 
-create index idx_orders_payment_order_id
+create index if not exists idx_orders_payment_order_id
     on general_orders (payment_order_id);
 
-create index idx_orders_status_composite
+create index if not exists idx_orders_status_composite
     on general_orders (order_status, pay_status, delivery_status);
 
-create index idx_orders_user_id
+create index if not exists idx_orders_user_id
     on general_orders (user_id);
 
 
 -- 创建索引（SQLite不支持ALTER TABLE ADD INDEX，需单独执行）
-CREATE INDEX idx_orders_user_id ON general_orders (user_id);
-CREATE INDEX idx_orders_order_no ON general_orders (order_no);
-CREATE INDEX idx_orders_payment_order_id ON general_orders (payment_order_id);
-CREATE INDEX idx_orders_create_time ON general_orders (create_time);
-CREATE INDEX idx_orders_status_composite ON general_orders (order_status, pay_status, delivery_status);
+CREATE INDEX IF NOT EXISTS idx_orders_user_id ON general_orders (user_id);
+CREATE INDEX IF NOT EXISTS idx_orders_order_no ON general_orders (order_no);
+CREATE INDEX IF NOT EXISTS idx_orders_payment_order_id ON general_orders (payment_order_id);
+CREATE INDEX IF NOT EXISTS idx_orders_create_time ON general_orders (create_time);
+CREATE INDEX IF NOT EXISTS idx_orders_status_composite ON general_orders (order_status, pay_status, delivery_status);
 
 
 

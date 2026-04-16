@@ -187,10 +187,15 @@ public class LoginBusinessService {
     private Object getUser(String table, String key, Object value) {
         IService iService = SpringUtils.getBean(table);
         QueryWrapper<?> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(key, value)
-                .eq(relevance_table, StringUtils.dbStrToHumpLower(LoginRelevanceConfig.getLoginRelevanceTable()))
-                .isNotNull(relevance_id_name)
-                .ne(relevance_id_name, "");
+        queryWrapper.eq(key, value);
+
+        String relevanceTableValue = LoginRelevanceConfig.getLoginRelevanceTable();
+        // 兼容历史调用：当未传relevanceTable时只按登录主键查询，避免空指针。
+        if (StringUtils.isNotEmpty(relevanceTableValue)) {
+            queryWrapper.eq(relevance_table, relevanceTableValue)
+                    .isNotNull(relevance_id_name)
+                    .ne(relevance_id_name, "");
+        }
         return iService.getOne(queryWrapper);
     }
 

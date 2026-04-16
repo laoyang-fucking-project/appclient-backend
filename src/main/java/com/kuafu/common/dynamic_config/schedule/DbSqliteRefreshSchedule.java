@@ -29,11 +29,26 @@ public class DbSqliteRefreshSchedule {
     @Resource
     private DbConfigurationRefreshPublisher dbConfigurationRefreshPublisher;
 
+    private volatile boolean missingTableLogged = false;
+
     @Scheduled
     @ScheduledDynamicCron(cornName = "dbconfig.refreshInterval", handler = DbRefreshConfigureScheduleCornHandler.class)
     public void refresh() {
+        if (missingTableLogged) {
+            return;
+        }
         log.info("refresh");
-        List<SystemConfig> list = systemConfigService.list();
+        List<SystemConfig> list;
+        try {
+            list = systemConfigService.list();
+            missingTableLogged = false;
+        } catch (Exception e) {
+            if (!missingTableLogged) {
+                log.warn("跳过动态配置刷新：未检测到 kf_system_config 或数据库尚未初始化: {}", e.getMessage());
+                missingTableLogged = true;
+            }
+            return;
+        }
         if (dbConfigMap.isEmpty()) {
             for (SystemConfig systemConfig : list) {
                 if (StringUtils.isNotEmpty(systemConfig.getContent()) && StringUtils.isNotEmpty(systemConfig.getName())) {

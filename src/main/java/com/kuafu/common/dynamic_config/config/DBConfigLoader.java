@@ -43,12 +43,27 @@ public class DBConfigLoader {
                 .retryOn(Exception.class)
                 .build();
 
-        retryTemplate.execute(ctx -> loading());
+        try {
+            retryTemplate.execute(ctx -> loading());
+        } catch (Exception e) {
+            // 环境初始化阶段允许降级启动，避免因动态配置表缺失导致服务不可用
+            log.warn("动态配置加载失败，降级为默认配置启动: {}", e.getMessage());
+        }
     }
 
     public boolean loading() {
         log.info("开始加载数据库配置...");
-        List<SystemConfig> systemConfigs = systemConfigService.list();
+        List<SystemConfig> systemConfigs;
+        try {
+            systemConfigs = systemConfigService.list();
+        } catch (Exception e) {
+            String message = e.getMessage();
+            if (message != null && message.contains("no such table: kf_system_config")) {
+                log.warn("检测到缺失 kf_system_config 表，跳过数据库动态配置加载");
+                return true;
+            }
+            throw e;
+        }
 
         if (ObjectUtils.isEmpty(systemConfigs)) {
             return true;
